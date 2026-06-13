@@ -78,3 +78,59 @@ async function loadMaterials() {
     });
 
 }
+
+function applyMaterialFilters() {
+
+    const search =
+        document.getElementById("materialSearch")
+            .value
+            .toLowerCase();
+
+    const category =
+        document.getElementById("categoryFilter")
+            .value;
+
+    const group =
+        document.getElementById("groupFilter")
+            .value;
+
+    let filtered = materialData;
+
+    if(category){
+
+        filtered = filtered.filter(
+            x => x.Category === category
+        );
+
+    }
+
+    if(group){
+
+        filtered = filtered.filter(
+            x => x["Material Group"] === group
+        );
+
+    }
+
+    if(search){
+
+        filtered = filtered.filter(
+            x =>
+                (x.Material || "")
+                    .toLowerCase()
+                    .includes(search)
+                ||
+                (x.Brand || "")
+                    .toLowerCase()
+                    .includes(search)
+                ||
+                (x.Specification || "")
+                    .toLowerCase()
+                    .includes(search)
+        );
+
+    }
+
+    renderMaterialTable(filtered);
+
+}
