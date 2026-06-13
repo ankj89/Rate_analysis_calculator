@@ -92,7 +92,9 @@
     <h2>Rate Analysis</h2>
 
     <!-- Product Information -->
-
+            
+<div id="productInfoSection">
+    
     <div class="card mb-3">
         <div class="card-body">
 
@@ -132,9 +134,26 @@
 
         </div>
     </div>
+</div>
+            <div class="text-end mb-3">
 
+    <button
+        id="gotoRateAnalysisBtn"
+        class="btn btn-primary">
+
+        Proceed to Rate Analysis
+
+    </button>
+
+</div>
+
+<div id="rateAnalysisSection"
+     style="display:none;">
+    
     <!-- Material Cost -->
-
+<div id="rateAnalysisSection"
+     style="display:none;">
+    
     <div class="card mb-3">
         <div class="card-body">
 
@@ -208,7 +227,136 @@
 
         </div>
     </div>
-            <!-- Description Builder -->
+
+        <!-- Commercial Inputs -->
+
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <h5>Commercial Inputs</h5>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label>Wastage %</label>
+                    <input id="wastagePct"
+                           type="number"
+                           value="5"
+                           class="form-control">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Vendor Margin %</label>
+                    <input id="vendorMarginPct"
+                           type="number"
+                           value="10"
+                           class="form-control">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Company Margin %</label>
+                    <input id="companyMarginPct"
+                           type="number"
+                           value="15"
+                           class="form-control">
+                </div>
+
+                <div class="col-md-3">
+                    <label>GST %</label>
+                    <input id="gstPct"
+                           type="number"
+                           value="18"
+                           class="form-control">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Cost Summary -->
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <h5>Cost Summary</h5>
+
+            <table class="table">
+
+                <tr>
+                    <td>Material Cost</td>
+                    <td id="materialCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Labor Cost</td>
+                    <td id="laborCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Direct Cost</td>
+                    <td id="directCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Wastage</td>
+                    <td id="wastageCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Vendor Margin</td>
+                    <td id="vendorMarginCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Company Margin</td>
+                    <td id="companyMarginCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Sub Total</td>
+                    <td id="subTotal">0</td>
+                </tr>
+
+                <tr>
+                    <td>GST</td>
+                    <td id="gstCost">0</td>
+                </tr>
+
+                <tr>
+                    <td>Final Cost</td>
+                    <td id="finalCost">0</td>
+                </tr>
+
+                <tr>
+                    <td><b>Unit Rate</b></td>
+                    <td><b id="unitRate">0</b></td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+    
+<div class="text-end mb-3">
+
+    <button
+        id="gotoDescriptionBtn"
+        class="btn btn-primary">
+
+        Proceed to Item Description
+
+    </button>
+
+</div>    
+         
+    <div id="descriptionSection"
+     style="display:none;">
+
+    <!-- Description Builder -->
 
 <div class="card mb-3">
 
@@ -288,117 +436,9 @@
 
 </div>
 
-    <!-- Commercial Inputs -->
-
-    <div class="card mb-3">
-        <div class="card-body">
-
-            <h5>Commercial Inputs</h5>
-
-            <div class="row">
-
-                <div class="col-md-3">
-                    <label>Wastage %</label>
-                    <input id="wastagePct"
-                           type="number"
-                           value="5"
-                           class="form-control">
-                </div>
-
-                <div class="col-md-3">
-                    <label>Vendor Margin %</label>
-                    <input id="vendorMarginPct"
-                           type="number"
-                           value="10"
-                           class="form-control">
-                </div>
-
-                <div class="col-md-3">
-                    <label>Company Margin %</label>
-                    <input id="companyMarginPct"
-                           type="number"
-                           value="15"
-                           class="form-control">
-                </div>
-
-                <div class="col-md-3">
-                    <label>GST %</label>
-                    <input id="gstPct"
-                           type="number"
-                           value="18"
-                           class="form-control">
-                </div>
-
-            </div>
-
-        </div>
     </div>
 
-    <!-- Cost Summary -->
 
-    <div class="card">
-
-        <div class="card-body">
-
-            <h5>Cost Summary</h5>
-
-            <table class="table">
-
-                <tr>
-                    <td>Material Cost</td>
-                    <td id="materialCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Labor Cost</td>
-                    <td id="laborCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Direct Cost</td>
-                    <td id="directCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Wastage</td>
-                    <td id="wastageCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Vendor Margin</td>
-                    <td id="vendorMarginCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Company Margin</td>
-                    <td id="companyMarginCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Sub Total</td>
-                    <td id="subTotal">0</td>
-                </tr>
-
-                <tr>
-                    <td>GST</td>
-                    <td id="gstCost">0</td>
-                </tr>
-
-                <tr>
-                    <td>Final Cost</td>
-                    <td id="finalCost">0</td>
-                </tr>
-
-                <tr>
-                    <td><b>Unit Rate</b></td>
-                    <td><b id="unitRate">0</b></td>
-                </tr>
-
-            </table>
-
-        </div>
-
-    </div>
 
 </section>
 
