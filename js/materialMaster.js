@@ -125,6 +125,11 @@ function renderMaterialTable(data) {
             <td>${m.Brand || ""}</td>
 
             <td>${m.Specification || ""}</td>
+            <td>${m["Description Role"] || ""}</td>
+
+<td>${m["Show In Description"] || ""}</td>
+
+<td>${m["Base Rate Reference"] || ""}</td>
 
             <td>${m.UOM || ""}</td>
 
