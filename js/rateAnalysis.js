@@ -54,19 +54,23 @@ async function addMaterialRow() {
     const row =
         document.createElement("tr");
 
+    const datalistId =
+        "materialList_" +
+        Date.now();
+
     let options = "";
 
     materials.forEach(m => {
 
+        const displayText =
+
+            `${m.Material || ""} | ` +
+            `${m.Brand || ""} | ` +
+            `${m.Specification || ""}`;
+
         options += `
         <option
-            value="${m.id}"
-            data-rate="${m.Rate || 0}">
-
-            ${m.Material || ""} |
-            ${m.Brand || ""} |
-            ${m.Specification || ""}
-
+            value="${displayText}">
         </option>
         `;
 
@@ -76,15 +80,24 @@ async function addMaterialRow() {
 
         <td>
 
-            <select class="form-select materialDropdown">
+            <input
+                class="form-control materialSearch"
+                list="${datalistId}"
+                placeholder="Type material name">
 
-                <option value="">
-                    Select Material
-                </option>
+            <datalist id="${datalistId}">
 
                 ${options}
 
-            </select>
+            </datalist>
+
+        </td>
+
+        <td>
+
+            <input
+                class="form-control uomInput"
+                readonly>
 
         </td>
 
@@ -92,8 +105,8 @@ async function addMaterialRow() {
 
             <input
                 type="number"
-                class="form-control qtyInput"
-                value="1">
+                value="1"
+                class="form-control qtyInput">
 
         </td>
 
@@ -116,7 +129,7 @@ async function addMaterialRow() {
         <td>
 
             <button
-                class="btn btn-danger">
+                class="btn btn-danger removeRow">
 
                 X
 
@@ -128,15 +141,26 @@ async function addMaterialRow() {
 
     tbody.appendChild(row);
 
-    wireMaterialRow(row);
+    wireMaterialRow(
+        row,
+        materials
+    );
 
 }
 
-function wireMaterialRow(row) {
+function wireMaterialRow(
+    row,
+    materials
+) {
 
-    const dropdown =
+    const materialSearch =
         row.querySelector(
-            ".materialDropdown"
+            ".materialSearch"
+        );
+
+    const uom =
+        row.querySelector(
+            ".uomInput"
         );
 
     const qty =
@@ -154,37 +178,74 @@ function wireMaterialRow(row) {
             ".amountInput"
         );
 
-    dropdown.addEventListener(
+    const removeBtn =
+        row.querySelector(
+            ".removeRow"
+        );
+
+    materialSearch.addEventListener(
         "change",
         () => {
 
             const selected =
-                dropdown.selectedOptions[0];
+                materials.find(m => {
 
-            const materialRate =
-                Number(
-                    selected.dataset.rate || 0
-                );
+                    const text =
+
+                        `${m.Material || ""} | ` +
+                        `${m.Brand || ""} | ` +
+                        `${m.Specification || ""}`;
+
+                    return (
+                        text ===
+                        materialSearch.value
+                    );
+
+                });
+
+            if(!selected)
+                return;
+
+            uom.value =
+                selected.UOM || "";
 
             rate.value =
-                materialRate;
+                selected.Rate || 0;
 
-            calculateRow();
+            calculate();
 
         }
     );
 
     qty.addEventListener(
         "input",
-        calculateRow
+        calculate
     );
 
-    function calculateRow() {
+    removeBtn.addEventListener(
+        "click",
+        () => {
+
+            row.remove();
+
+            updateMaterialSummary();
+
+        }
+    );
+
+    function calculate() {
 
         const total =
-            Number(qty.value || 0)
+
+            Number(
+                qty.value || 0
+            )
+
             *
-            Number(rate.value || 0);
+
+            Number(
+                rate.value || 0
+            );
 
         amount.value =
             total.toFixed(2);
