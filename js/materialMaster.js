@@ -30,6 +30,12 @@ async function initMaterialMaster() {
             "change",
             applyMaterialFilters
         );
+    document
+    .getElementById("exportMaterialBtn")
+    .addEventListener(
+        "click",
+        exportMaterials
+    );
 
     await loadMaterials();
 
@@ -114,16 +120,25 @@ function renderMaterialTable(data) {
 
             <td>${m.Rate || ""}</td>
 
-            <td>
+           <td>
 
-                <button
-                    class="btn btn-sm btn-warning">
+    <button
+        class="btn btn-sm btn-warning"
+        onclick="editMaterial(${m.id})">
 
-                    Edit
+        Edit
 
-                </button>
+    </button>
 
-            </td>
+    <button
+        class="btn btn-sm btn-danger"
+        onclick="deleteMaterial(${m.id})">
+
+        Delete
+
+    </button>
+
+</td>
 
         </tr>
         `;
@@ -242,5 +257,73 @@ function applyMaterialFilters() {
     }
 
     renderMaterialTable(filtered);
+
+}
+
+async function editMaterial(id) {
+
+    const material =
+        materialData.find(
+            x => x.id === id
+        );
+
+    if (!material) return;
+
+    const newRate =
+        prompt(
+            "Enter New Rate",
+            material.Rate
+        );
+
+    if (
+        newRate === null ||
+        newRate === ""
+    ) return;
+
+    material.Rate =
+        Number(newRate);
+
+    await materialService.update(
+        material
+    );
+
+    await loadMaterials();
+
+}
+async function deleteMaterial(id) {
+
+    const confirmDelete =
+        confirm(
+            "Delete this material?"
+        );
+
+    if (!confirmDelete) return;
+
+    await materialService.delete(id);
+
+    await loadMaterials();
+
+}
+
+function exportMaterials() {
+
+    const worksheet =
+        XLSX.utils.json_to_sheet(
+            materialData
+        );
+
+    const workbook =
+        XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Materials"
+    );
+
+    XLSX.writeFile(
+        workbook,
+        "Material_Master.xlsx"
+    );
 
 }
