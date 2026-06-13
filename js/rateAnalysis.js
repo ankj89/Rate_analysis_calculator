@@ -69,9 +69,7 @@ async function addMaterialRow() {
             `${m.Specification || ""}`;
 
         options += `
-        <option
-            value="${displayText}">
-        </option>
+            <option value="${displayText}">
         `;
 
     });
@@ -83,12 +81,10 @@ async function addMaterialRow() {
             <input
                 class="form-control materialSearch"
                 list="${datalistId}"
-                placeholder="Type material name">
+                placeholder="Search or type new material">
 
             <datalist id="${datalistId}">
-
                 ${options}
-
             </datalist>
 
         </td>
@@ -96,8 +92,7 @@ async function addMaterialRow() {
         <td>
 
             <input
-                class="form-control uomInput"
-                readonly>
+                class="form-control uomInput">
 
         </td>
 
@@ -113,8 +108,8 @@ async function addMaterialRow() {
         <td>
 
             <input
-                class="form-control rateInput"
-                readonly>
+                type="number"
+                class="form-control rateInput">
 
         </td>
 
@@ -129,6 +124,7 @@ async function addMaterialRow() {
         <td>
 
             <button
+                type="button"
                 class="btn btn-danger removeRow">
 
                 X
@@ -203,14 +199,27 @@ function wireMaterialRow(
 
                 });
 
-            if(!selected)
-                return;
+            if(selected){
 
-            uom.value =
-                selected.UOM || "";
+                uom.value =
+                    selected.UOM || "";
 
-            rate.value =
-                selected.Rate || 0;
+                rate.value =
+                    selected.Rate || 0;
+
+                uom.readOnly = true;
+                rate.readOnly = true;
+
+            }
+            else{
+
+                uom.value = "";
+                rate.value = "";
+
+                uom.readOnly = false;
+                rate.readOnly = false;
+
+            }
 
             calculate();
 
@@ -218,6 +227,11 @@ function wireMaterialRow(
     );
 
     qty.addEventListener(
+        "input",
+        calculate
+    );
+
+    rate.addEventListener(
         "input",
         calculate
     );
