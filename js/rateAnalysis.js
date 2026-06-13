@@ -8,6 +8,12 @@ async function initRateAnalysis() {
             "click",
             addMaterialRow
         );
+    document
+    .getElementById("addLaborRow")
+    .addEventListener(
+        "click",
+        addLaborRow
+    );
 
 }
 async function loadRACategories() {
@@ -144,6 +150,108 @@ async function addMaterialRow() {
 
 }
 
+async function addLaborRow() {
+
+    const laborItems =
+        await laborService.getAll();
+
+    const tbody =
+        document.getElementById(
+            "raLaborTable"
+        );
+
+    const row =
+        document.createElement("tr");
+
+    const datalistId =
+        "laborList_" +
+        Date.now();
+
+    let options = "";
+
+    laborItems.forEach(l => {
+
+        const displayText =
+
+            `${l.Activity || ""}`;
+
+        options += `
+            <option value="${displayText}">
+        `;
+
+    });
+
+    row.innerHTML = `
+
+        <td>
+
+            <input
+                class="form-control laborSearch"
+                list="${datalistId}"
+                placeholder="Search or type new labor">
+
+            <datalist id="${datalistId}">
+                ${options}
+            </datalist>
+
+        </td>
+
+        <td>
+
+            <input
+                class="form-control rateTypeInput">
+
+        </td>
+
+        <td>
+
+            <input
+                type="number"
+                value="1"
+                class="form-control laborQty">
+
+        </td>
+
+        <td>
+
+            <input
+                type="number"
+                class="form-control laborRate">
+
+        </td>
+
+        <td>
+
+            <input
+                class="form-control laborAmount"
+                readonly>
+
+        </td>
+
+        <td>
+
+            <button
+                type="button"
+                class="btn btn-danger removeLabor">
+
+                X
+
+            </button>
+
+        </td>
+
+    `;
+
+    tbody.appendChild(row);
+
+    wireLaborRow(
+        row,
+        laborItems
+    );
+
+}
+
+
 function wireMaterialRow(
     row,
     materials
@@ -269,7 +377,122 @@ function wireMaterialRow(
     }
 
 }
+function wireLaborRow(
+    row,
+    laborItems
+) {
 
+    const laborSearch =
+        row.querySelector(
+            ".laborSearch"
+        );
+
+    const rateType =
+        row.querySelector(
+            ".rateTypeInput"
+        );
+
+    const qty =
+        row.querySelector(
+            ".laborQty"
+        );
+
+    const rate =
+        row.querySelector(
+            ".laborRate"
+        );
+
+    const amount =
+        row.querySelector(
+            ".laborAmount"
+        );
+
+    const removeBtn =
+        row.querySelector(
+            ".removeLabor"
+        );
+
+    laborSearch.addEventListener(
+        "change",
+        () => {
+
+            const selected =
+                laborItems.find(
+                    l =>
+                        l.Activity ===
+                        laborSearch.value
+                );
+
+            if(selected){
+
+                rateType.value =
+                    selected["Rate Type"] || "";
+
+                rate.value =
+                    selected.Rate || 0;
+
+                rateType.readOnly = true;
+                rate.readOnly = true;
+
+            }
+            else{
+
+                rateType.value = "";
+                rate.value = "";
+
+                rateType.readOnly = false;
+                rate.readOnly = false;
+
+            }
+
+            calculate();
+
+        }
+    );
+
+    qty.addEventListener(
+        "input",
+        calculate
+    );
+
+    rate.addEventListener(
+        "input",
+        calculate
+    );
+
+    removeBtn.addEventListener(
+        "click",
+        () => {
+
+            row.remove();
+
+            updateLaborSummary();
+
+        }
+    );
+
+    function calculate() {
+
+        const total =
+
+            Number(
+                qty.value || 0
+            )
+
+            *
+
+            Number(
+                rate.value || 0
+            );
+
+        amount.value =
+            total.toFixed(2);
+
+        updateLaborSummary();
+
+    }
+
+}
 function updateMaterialSummary() {
 
     let total = 0;
@@ -327,5 +550,32 @@ function updateTotalCost() {
         )
         .innerText =
         directCost.toFixed(2);
+
+}
+function updateLaborSummary() {
+
+    let total = 0;
+
+    document
+        .querySelectorAll(
+            ".laborAmount"
+        )
+        .forEach(x => {
+
+            total +=
+                Number(
+                    x.value || 0
+                );
+
+        });
+
+    document
+        .getElementById(
+            "laborCost"
+        )
+        .innerText =
+        total.toFixed(2);
+
+    updateTotalCost();
 
 }
