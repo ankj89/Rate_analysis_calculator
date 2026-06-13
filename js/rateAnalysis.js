@@ -83,6 +83,17 @@ document
 
         }
     );
+document
+    .getElementById(
+        "generateDescriptionBtn"
+    )
+    .addEventListener(
+        "click",
+        generateDescription
+    );
+
+
+    
 }
 async function loadRACategories() {
 
@@ -646,4 +657,131 @@ function updateLaborSummary() {
 
     updateTotalCost();
 
+}
+
+function generateDescription() {
+
+    const scope =
+        document.getElementById(
+            "scopeOfWork"
+        ).value;
+
+    const inclusions =
+        document.getElementById(
+            "inclusions"
+        ).value;
+
+    const exclusions =
+        document.getElementById(
+            "exclusions"
+        ).value;
+
+    const notes =
+        document.getElementById(
+            "notes"
+        ).value;
+
+    const materials =
+        getMaterialDescription();
+
+    const brands =
+        getBrandDescription();
+
+    const baseRates =
+        getBaseRateDescription();
+
+    const finalDescription =
+
+`Scope of Work:
+${scope}
+
+
+Materials & Specifications:
+${materials}
+
+
+Inclusions:
+${inclusions}
+
+
+Exclusions:
+${exclusions}
+
+
+Notes:
+${notes}
+
+
+Brand of Materials:
+${brands}
+
+
+Base Rates Considered:
+${baseRates}`;
+
+    document.getElementById(
+        "finalDescription"
+    ).value =
+        finalDescription;
+}
+
+function getMaterialDescription() {
+
+    let output = "";
+
+    document
+        .querySelectorAll(
+            ".materialSearch"
+        )
+        .forEach(row => {
+
+            if(row.value){
+
+                output +=
+                    row.value +
+                    "\n";
+
+            }
+
+        });
+
+    return output;
+}
+
+function getBrandDescription() {
+
+    const brands = [];
+
+    document
+        .querySelectorAll(
+            ".materialSearch"
+        )
+        .forEach(row => {
+
+            if(!row.value)
+                return;
+
+            const parts =
+                row.value.split("|");
+
+            if(parts.length >= 2){
+
+                brands.push(
+                    parts[1].trim()
+                );
+
+            }
+
+        });
+
+    return [
+        ...new Set(brands)
+    ].join("\n");
+
+}
+
+
+function getBaseRateDescription() {
+
+    return "To be generated from selected finish materials";
 }
