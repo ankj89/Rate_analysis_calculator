@@ -77,3 +77,47 @@ const materialService = {
     }
 
 };
+
+async update(record) {
+
+    return new Promise((resolve, reject) => {
+
+        const tx = db.transaction(
+            STORES.MATERIALS,
+            "readwrite"
+        );
+
+        const store = tx.objectStore(
+            STORES.MATERIALS
+        );
+
+        const request = store.put(record);
+
+        request.onsuccess = resolve;
+        request.onerror = reject;
+
+    });
+
+},
+
+async delete(id) {
+
+    return new Promise((resolve, reject) => {
+
+        const tx = db.transaction(
+            STORES.MATERIALS,
+            "readwrite"
+        );
+
+        const store = tx.objectStore(
+            STORES.MATERIALS
+        );
+
+        const request = store.delete(id);
+
+        request.onsuccess = resolve;
+        request.onerror = reject;
+
+    });
+
+}
