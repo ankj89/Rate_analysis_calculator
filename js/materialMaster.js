@@ -1,3 +1,6 @@
+let materialData = [];
+
+
 async function initMaterialMaster() {
 
     document
