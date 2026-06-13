@@ -8,6 +8,7 @@ document.addEventListener(
 
         await initMaterialMaster();
         await initLaborMaster();
+        await initRateAnalysis();
 
     }
 );
