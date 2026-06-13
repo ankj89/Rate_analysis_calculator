@@ -14,38 +14,72 @@ async function initRateAnalysis() {
         "click",
         addLaborRow
     );
+
 document
     .getElementById(
-        "gotoRateAnalysisBtn"
+        "showProductInfo"
     )
     .addEventListener(
         "click",
         () => {
 
-            document
-                .getElementById(
-                    "rateAnalysisSection"
-                )
-                .style.display =
-                "block";
+            document.getElementById(
+                "productInfoSection"
+            ).style.display = "block";
+
+            document.getElementById(
+                "rateAnalysisSection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "descriptionSection"
+            ).style.display = "none";
 
         }
     );
 
 document
     .getElementById(
-        "gotoDescriptionBtn"
+        "showRateAnalysis"
     )
     .addEventListener(
         "click",
         () => {
 
-            document
-                .getElementById(
-                    "descriptionSection"
-                )
-                .style.display =
-                "block";
+            document.getElementById(
+                "productInfoSection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "rateAnalysisSection"
+            ).style.display = "block";
+
+            document.getElementById(
+                "descriptionSection"
+            ).style.display = "none";
+
+        }
+    );
+
+document
+    .getElementById(
+        "showDescription"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            document.getElementById(
+                "productInfoSection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "rateAnalysisSection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "descriptionSection"
+            ).style.display = "block";
 
         }
     );
