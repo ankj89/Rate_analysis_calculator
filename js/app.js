@@ -1,10 +1,15 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
-    await initDB();
+        await initDB();
 
-    initializeNavigation();
+        initializeNavigation();
 
-});
+        await initMaterialMaster();
+
+    }
+);
 
 function initializeNavigation() {
 
