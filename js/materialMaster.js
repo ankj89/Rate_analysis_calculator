@@ -10,7 +10,29 @@ async function initMaterialMaster() {
             handleMaterialUpload
         );
 
+    document
+        .getElementById("materialSearch")
+        .addEventListener(
+            "input",
+            applyMaterialFilters
+        );
+
+    document
+        .getElementById("categoryFilter")
+        .addEventListener(
+            "change",
+            applyMaterialFilters
+        );
+
+    document
+        .getElementById("groupFilter")
+        .addEventListener(
+            "change",
+            applyMaterialFilters
+        );
+
     await loadMaterials();
+
 }
 
 async function handleMaterialUpload() {
@@ -47,11 +69,24 @@ async function handleMaterialUpload() {
 
     await loadMaterials();
 }
-
 async function loadMaterials() {
 
-    const materials =
+    materialData =
         await materialService.getAll();
+
+    renderMaterialTable(materialData);
+
+    populateCategoryFilter();
+
+    populateGroupFilter();
+
+}
+
+
+
+
+
+function renderMaterialTable(data) {
 
     const tbody =
         document.getElementById(
@@ -60,7 +95,7 @@ async function loadMaterials() {
 
     tbody.innerHTML = "";
 
-    materials.forEach(m => {
+    data.forEach(m => {
 
         tbody.innerHTML += `
         <tr>
@@ -73,7 +108,22 @@ async function loadMaterials() {
 
             <td>${m.Brand || ""}</td>
 
+            <td>${m.Specification || ""}</td>
+
+            <td>${m.UOM || ""}</td>
+
             <td>${m.Rate || ""}</td>
+
+            <td>
+
+                <button
+                    class="btn btn-sm btn-warning">
+
+                    Edit
+
+                </button>
+
+            </td>
 
         </tr>
         `;
@@ -81,6 +131,63 @@ async function loadMaterials() {
     });
 
 }
+
+function populateCategoryFilter() {
+
+    const ddl =
+        document.getElementById(
+            "categoryFilter"
+        );
+
+    const categories =
+        [...new Set(
+            materialData.map(
+                x => x.Category
+            )
+        )];
+
+    ddl.innerHTML =
+        '<option value="">All Categories</option>';
+
+    categories.forEach(cat => {
+
+        ddl.innerHTML +=
+        `<option value="${cat}">
+            ${cat}
+        </option>`;
+
+    });
+
+}
+
+function populateGroupFilter() {
+
+    const ddl =
+        document.getElementById(
+            "groupFilter"
+        );
+
+    const groups =
+        [...new Set(
+            materialData.map(
+                x => x["Material Group"]
+            )
+        )];
+
+    ddl.innerHTML =
+        '<option value="">All Groups</option>';
+
+    groups.forEach(group => {
+
+        ddl.innerHTML +=
+        `<option value="${group}">
+            ${group}
+        </option>`;
+
+    });
+
+}
+
 
 function applyMaterialFilters() {
 
