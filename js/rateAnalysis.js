@@ -14,7 +14,41 @@ async function initRateAnalysis() {
         "click",
         addLaborRow
     );
+document
+    .getElementById(
+        "gotoRateAnalysisBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
 
+            document
+                .getElementById(
+                    "rateAnalysisSection"
+                )
+                .style.display =
+                "block";
+
+        }
+    );
+
+document
+    .getElementById(
+        "gotoDescriptionBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            document
+                .getElementById(
+                    "descriptionSection"
+                )
+                .style.display =
+                "block";
+
+        }
+    );
 }
 async function loadRACategories() {
 
