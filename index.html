@@ -183,9 +183,70 @@
 
         <!-- Labor -->
         <section id="laborMaster" class="page">
-            <h2>Labor Master</h2>
-            <p>Coming in Build 3</p>
-        </section>
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <h2>Labor Master</h2>
+
+        <div>
+
+            <input type="file"
+                   id="laborUpload"
+                   accept=".xlsx,.xls"
+                   hidden>
+
+            <button id="uploadLaborBtn"
+                    class="btn btn-primary">
+                Upload Excel
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+
+            <select id="laborCategoryFilter"
+                    class="form-select">
+
+                <option value="">
+                    All Categories
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-9">
+
+            <input id="laborSearch"
+                   class="form-control"
+                   placeholder="Search Labor Activity">
+
+        </div>
+
+    </div>
+
+    <table class="table table-striped mt-3">
+
+        <thead>
+
+            <tr>
+                <th>Category</th>
+                <th>Activity</th>
+                <th>Rate Type</th>
+                <th>Rate</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="laborTableBody"></tbody>
+
+    </table>
+
+</section>
 
         <!-- Derived -->
         <section id="derivedRates" class="page">
