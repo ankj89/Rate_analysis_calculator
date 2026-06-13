@@ -694,28 +694,16 @@ function generateDescription() {
 
 `Scope of Work:
 ${scope}
-
-
 Materials & Specifications:
 ${materials}
-
-
 Inclusions:
 ${inclusions}
-
-
 Exclusions:
 ${exclusions}
-
-
 Notes:
 ${notes}
-
-
 Brand of Materials:
 ${brands}
-
-
 Base Rates Considered:
 ${baseRates}`;
 
@@ -724,6 +712,8 @@ ${baseRates}`;
     ).value =
         finalDescription;
 }
+
+
 
 function getMaterialDescription() {
 
