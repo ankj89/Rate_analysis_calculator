@@ -7,6 +7,7 @@ document.addEventListener(
         initializeNavigation();
 
         await initMaterialMaster();
+        await initLaborMaster();
 
     }
 );
