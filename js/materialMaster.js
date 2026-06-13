@@ -4,11 +4,21 @@ let materialData = [];
 async function initMaterialMaster() {
 
     document
-        .getElementById("uploadMaterialBtn")
-        .addEventListener(
-            "click",
-            handleMaterialUpload
-        );
+    .getElementById("uploadMaterialBtn")
+    .addEventListener(
+        "click",
+        () => {
+            document
+                .getElementById("materialUpload")
+                .click();
+        }
+    );
+    document
+    .getElementById("materialUpload")
+    .addEventListener(
+        "change",
+        handleMaterialUpload
+    );
 
     document
         .getElementById("materialSearch")
